@@ -7,7 +7,7 @@ def get_priority(c):
 
 def in_all(*args):
     # cast all arguments into sets and return one element of the intersection
-    return set.intersection(*tuple(map(set, args))).pop()
+    return set.intersection(*map(set, args)).pop()
 
 def get_group_priorities():
     n = 0
