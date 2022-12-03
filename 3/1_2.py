@@ -13,9 +13,8 @@ def get_group_priorities():
     n = 0
     group = []
     for l in open('input', 'r'):
-        l = l.strip()
         n += 1
-        group.append(l)
+        group.append(l.strip())
         if n % 3 == 0 and n > 0:
             yield get_priority(in_all(*group))
             n = 0
