@@ -27,17 +27,23 @@ class Pos:
         assert abs(d_x) < 3
         assert abs(d_y) < 3
         if abs(d_x) > 1:
-            self.x += d_x - 1 if (d_x > 0) else -1
-            if d_y > 0:
-                self.y += 1
-            elif d_y < 0:
-                self.y -= 1
-        elif abs(d_y) > 1:
-            self.y += d_y - 1 if (d_y > 0) else -1
             if d_x > 0:
-                self.x += 1
+                self.move("R")
+            else:
+                self.move("L")
+            if d_y > 0:
+                self.move("U")
+            elif d_y < 0:
+                self.move("D")
+        elif abs(d_y) > 1:
+            if d_y > 0:
+                self.move("U")
+            else:
+                self.move("D")
+            if d_x > 0:
+                self.move("R")
             elif d_x < 0:
-                self.x -= 1
+                self.move("L")
         # print("after follow self -> other:", self, other)
 
     def get_pos(self):
