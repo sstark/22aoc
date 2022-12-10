@@ -74,7 +74,7 @@ class Cpu:
 class Crt:
     def draw_pixel(self, reg_x, cycle):
         x = cycle % 40
-        if x == reg_x or x == reg_x - 1 or x == reg_x + 1:
+        if abs(reg_x - x) < 2:
             sys.stdout.write("#")
         else:
             sys.stdout.write(".")
