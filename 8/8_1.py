@@ -65,7 +65,7 @@ for row_count, row in enumerate(forest.get_rows()):
     vis_rows = get_visible_trees(row)
     for x in vis_rows:
         visible_trees[(x, row_count)] = True
-    print(vis_rows)
+    # print(vis_rows)
 
 vis_col = 0
 for col_count, col in enumerate(forest.get_cols()):
@@ -73,6 +73,6 @@ for col_count, col in enumerate(forest.get_cols()):
     vis_cols = get_visible_trees(col)
     for y in vis_cols:
         visible_trees[(col_count, y)] = True
-    print(vis_cols)
+    # print(vis_cols)
 
 print(len(visible_trees))
