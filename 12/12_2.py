@@ -149,7 +149,7 @@ new_dist = 0
 print("find shortest path")
 while heap:
     node = heappop(heap)
-    # change for #1
+    # change for #2
     if node.letter == "a" or node.letter == "S":
         print("found", node.letter)
         print(node.dist)
