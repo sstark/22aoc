@@ -144,6 +144,7 @@ for y in range(size_y):
 # print(graph)
 # print(heap)
 
+# https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 new_dist = 0
 print("find shortest path")
 while heap:
