@@ -160,4 +160,4 @@ while heap:
             if new_dist < neigh_obj.dist:
                 neigh_obj.dist = new_dist
                 neigh_obj.parent = node
-                heapify(heap)
+    heapify(heap)
