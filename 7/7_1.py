@@ -30,10 +30,7 @@ class Dir:
         self.entries.add(File(f, size))
 
     def get_size(self):
-        size = 0
-        for e in self.entries:
-            size += e.get_size()
-        return size
+        return sum([e.get_size() for e in self.entries])
 
     def get_dir(self, name):
         if name == "..":
@@ -99,13 +96,6 @@ with open("input", "r") as f:
 
 print(fs.lsR())
 
-total = 0
-
-for dir in fs.walk_dirs():
-    size = dir.get_size()
-    if size < 100_000:
-        total += size
-
-print(total)
+print(sum(filter(lambda x: x<100_000, [d.get_size() for d in fs.walk_dirs()])))
 
     
