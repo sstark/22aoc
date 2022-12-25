@@ -9,10 +9,11 @@ class NoSuchDir(Exception):
 class File:
     def __init__(self, name, size):
         self.name = name
-        self.size = size
+        self.filesize = size
 
-    def get_size(self):
-        return self.size
+    @property
+    def size(self):
+        return self.filesize
 
 
 class Dir:
@@ -29,8 +30,9 @@ class Dir:
     def mkfile(self, f, size):
         self.entries.add(File(f, size))
 
-    def get_size(self):
-        return sum([e.get_size() for e in self.entries])
+    @property
+    def size(self):
+        return sum([e.size for e in self.entries])
 
     def get_dir(self, name):
         if name == "..":
@@ -96,6 +98,6 @@ with open("input", "r") as f:
 
 print(fs.lsR())
 
-print(sum(filter(lambda x: x<100_000, [d.get_size() for d in fs.walk_dirs()])))
+print(sum([d.size for d in fs.walk_dirs() if d.size < 100_000]))
 
     
