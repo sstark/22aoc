@@ -1,6 +1,5 @@
 #!/bin/python
 
-from itertools import starmap
 from operator import add
 obsidian = {}
 
@@ -29,4 +28,5 @@ while True:
         break
     add_cube(obsidian, next)
 
+print(obsidian)
 print(sum(obsidian.values()))
