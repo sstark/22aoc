@@ -9,7 +9,6 @@ def add_cube(obsidian, line):
     coord = tuple(map(int, line.split(",")))
     sides = 6
     for n in touching_neighours(obsidian, coord):
-        # print("{} touches {}".format(coord, n))
         sides -= 1
         obsidian[n] -= 1
     obsidian[coord] = sides
@@ -17,12 +16,15 @@ def add_cube(obsidian, line):
 def tuple_add(t1, t2):
     return tuple(map(add, t1, t2))
 
-def touching_neighours(obsidian, coord):
+def neighbours(coord):
     neighbour_locations = [(0,0,-1),(0,0,1),(0,-1,0),(0,1,0),(-1,0,0),(1,0,0)]
-    for n in neighbour_locations:
-        neigh_coord = tuple_add(coord, n)
-        if neigh_coord in obsidian:
-            yield neigh_coord
+    for neigh in neighbour_locations:
+        yield tuple_add(coord, neigh)
+
+def touching_neighours(obsidian, coord):
+    for neigh in neighbours(coord):
+        if neigh in obsidian:
+            yield neigh
 
 def out_of_bounds(coord):
     for c in coord:
@@ -30,24 +32,25 @@ def out_of_bounds(coord):
             return True
     return False
 
+# surrounding air minus the obsidian
 air_hull = {(0, 0, 0): True}
+# only the air molecules touching the obsidian
 air_shell = {}
+
 def expand_air():
-    neighbour_locations = [(0,0,-1),(0,0,1),(0,-1,0),(0,1,0),(-1,0,0),(1,0,0)]
     expanded_space = {}
     for air_molecule in air_hull:
-        for neigh in neighbour_locations:
-            neigh_coord = tuple_add(air_molecule, neigh)
-            if neigh_coord in air_hull:
+        for neigh in neighbours(air_molecule):
+            if neigh in air_hull:
                 # already seen
                 continue
-            if neigh_coord in obsidian:
+            if neigh in obsidian:
                 air_shell[air_molecule] = True
                 # not air
                 continue
-            if out_of_bounds(neigh_coord):
+            if out_of_bounds(neigh):
                 continue
-            expanded_space[neigh_coord] = True
+            expanded_space[neigh] = True
     return expanded_space
 
 while True:
@@ -65,14 +68,8 @@ while True:
         break
 
 sum = 0
-neighbour_locations = [(0,0,-1),(0,0,1),(0,-1,0),(0,1,0),(-1,0,0),(1,0,0)]
 for air_molecule in air_shell:
-    for neigh in neighbour_locations:
-        neigh_coord = tuple_add(air_molecule, neigh)
-        if neigh_coord in obsidian:
+    for neigh in neighbours(air_molecule):
+        if neigh in obsidian:
             sum += 1
 print(sum)
-
-
-# for k, v in air_shell.items():
-#     print(k, v)
