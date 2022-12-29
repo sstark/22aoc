@@ -13,13 +13,9 @@ def add_cube(obsidian, line):
         obsidian[n] -= 1
     obsidian[coord] = sides
 
-def tuple_add(t1, t2):
-    return tuple(map(add, t1, t2))
-
 def neighbours(coord):
-    neighbour_locations = [(0,0,-1),(0,0,1),(0,-1,0),(0,1,0),(-1,0,0),(1,0,0)]
-    for neigh in neighbour_locations:
-        yield tuple_add(coord, neigh)
+    for neigh in [(0,0,-1),(0,0,1),(0,-1,0),(0,1,0),(-1,0,0),(1,0,0)]:
+        yield tuple(map(add, coord, neigh))
 
 def touching_neighours(obsidian, coord):
     for neigh in neighbours(coord):
