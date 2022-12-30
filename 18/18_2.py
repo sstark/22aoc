@@ -1,6 +1,7 @@
 #!/bin/python
 
 from operator import add
+from collections import deque
 obsidian = {}
 min = -1
 max = 21
@@ -28,27 +29,32 @@ def out_of_bounds(coord):
             return True
     return False
 
-# surrounding air minus the obsidian
-air_hull = {(0, 0, 0): True}
-# only the air molecules touching the obsidian
-air_shell = {}
 
-def expand_air():
-    expanded_space = {}
-    for air_molecule in air_hull:
-        for neigh in neighbours(air_molecule):
-            if neigh in air_hull:
-                # already seen
-                continue
+def air_shell(obsidian):
+    '''return coordinates of the air layer around the obsidian'''
+    checked = {}
+    shell = {}
+    q = deque([(0,0,0)])
+    while True:
+        try:
+            next = q.popleft()
+        except IndexError:
+            break
+        if next in checked:
+            continue
+        else:
+            checked[next] = True
+        if out_of_bounds(next):
+            continue
+        for neigh in neighbours(next):
             if neigh in obsidian:
-                air_shell[air_molecule] = True
-                # not air
-                continue
-            if out_of_bounds(neigh):
-                continue
-            expanded_space[neigh] = True
-    return expanded_space
+                shell[next] = True
+            else:
+                q.append(neigh)
+    return shell
 
+
+# build up obsidian from input
 while True:
     try:
         next = input()
@@ -56,16 +62,9 @@ while True:
         break
     add_cube(obsidian, next)
 
-while True:
-    new = expand_air()
-    if new:
-        air_hull.update(new)
-    else:
-        break
 
 sum = 0
-for air_molecule in air_shell:
+for air_molecule in air_shell(obsidian):
     for neigh in neighbours(air_molecule):
-        if neigh in obsidian:
-            sum += 1
+        sum += neigh in obsidian
 print(sum)
