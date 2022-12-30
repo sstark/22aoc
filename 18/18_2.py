@@ -7,28 +7,17 @@ min = -1
 max = 21
 
 def add_cube(obsidian, line):
-    coord = tuple(map(int, line.split(",")))
-    sides = 6
-    for n in touching_neighours(obsidian, coord):
-        sides -= 1
-        obsidian[n] -= 1
-    obsidian[coord] = sides
+    obsidian[tuple(map(int, line.split(",")))] = True
 
 def neighbours(coord):
     for neigh in [(0,0,-1),(0,0,1),(0,-1,0),(0,1,0),(-1,0,0),(1,0,0)]:
         yield tuple(map(add, coord, neigh))
-
-def touching_neighours(obsidian, coord):
-    for neigh in neighbours(coord):
-        if neigh in obsidian:
-            yield neigh
 
 def out_of_bounds(coord):
     for c in coord:
         if c < min or c > max:
             return True
     return False
-
 
 def air_shell(obsidian):
     '''return coordinates of the air layer around the obsidian'''
@@ -57,11 +46,9 @@ def air_shell(obsidian):
 # build up obsidian from input
 while True:
     try:
-        next = input()
+        add_cube(obsidian, input())
     except EOFError:
         break
-    add_cube(obsidian, next)
-
 
 sum = 0
 for air_molecule in air_shell(obsidian):
